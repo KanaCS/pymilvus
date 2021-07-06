@@ -1,5 +1,6 @@
 import datetime
 from urllib.parse import urlparse
+from urllib.request import install_opener, ProxyHandler, build_opener
 import logging
 import threading
 import ujson
@@ -28,6 +29,9 @@ from . import __version__
 
 LOGGER = logging.getLogger(__name__)
 
+proxy_support = urllib.request.ProxyHandler({})
+opener = urllib.request.build_opener(proxy_support)
+urllib.request.install_opener(opener)
 
 def error_handler(*rargs):
     def wrapper(func):
@@ -70,7 +74,7 @@ def set_uri(host, port, uri):
         _host = host
     elif port is None:
         try:
-            _uri = urlparse(uri, proxies={}) if uri else urlparse(config.GRPC_URI, proxies={})
+            _uri = urlparse(uri) if uri else urlparse(config.GRPC_URI)
             _host = _uri.hostname
             _port = _uri.port
         except (AttributeError, ValueError, TypeError) as e:
