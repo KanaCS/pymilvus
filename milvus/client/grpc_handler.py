@@ -70,7 +70,7 @@ def set_uri(host, port, uri):
         _host = host
     elif port is None:
         try:
-            _uri = urlparse(uri, proxies=None) if uri else urlparse(config.GRPC_URI, proxies=None)
+            _uri = urlparse(uri, proxies={}) if uri else urlparse(config.GRPC_URI, proxies={})
             _host = _uri.hostname
             _port = _uri.port
         except (AttributeError, ValueError, TypeError) as e:
