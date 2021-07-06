@@ -1,6 +1,6 @@
 import datetime
 from urllib.parse import urlparse
-from urllib.request import install_opener, ProxyHandler, build_opener
+import urllib
 import logging
 import threading
 import ujson
