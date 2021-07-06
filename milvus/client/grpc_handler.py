@@ -1,6 +1,6 @@
 import datetime
 from urllib.parse import urlparse
-import urllib
+from urllib.request import ProxyHandler, build_opener, install_opener
 import logging
 import threading
 import ujson
@@ -29,9 +29,9 @@ from . import __version__
 
 LOGGER = logging.getLogger(__name__)
 
-proxy_support = urllib.request.ProxyHandler({})
-opener = urllib.request.build_opener(proxy_support)
-urllib.request.install_opener(opener)
+proxy_support = ProxyHandler({})
+opener = build_opener(proxy_support)
+install_opener(opener)
 
 def error_handler(*rargs):
     def wrapper(func):
